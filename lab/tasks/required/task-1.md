@@ -59,16 +59,9 @@ The database starts empty. We can get anonymized data on task completions in Aut
 
 ### 1.2. Part A: Explore the API
 
-<!-- no toc -->
-- [1.2.1. Fetch the item catalog](#121-fetch-the-item-catalog)
-- [1.2.2. Fetch check logs](#122-fetch-check-logs)
-- [1.2.3. Test incremental sync](#123-test-incremental-sync)
+Before writing code, let's explore the autochecker API.
 
-> [!NOTE]
-> Before writing any code, let's explore the autochecker API with `curl` to understand the data format.
-> 
-> The API uses HTTP Basic Auth: `<your-email>` as the username and `<your-password>` as the password.
-> Here, `<your-password>` is `<your-github-username><your-telegram-alias>`.
+The API has HTTP Basic Auth, we'll use `curl` to send requests.
 
 #### 1.2.1. Fetch the item catalog
 
@@ -78,13 +71,13 @@ The database starts empty. We can get anonymized data on task completions in Aut
 
    ```terminal
    curl \
-     -u <your-email>@innopolis.university:<your-password> \
+     -u <your-email>@innopolis.university:<github-username><telegram-alias> \
      "https://auche.namaz.live/api/items"
    ```
 
-   Replace `<your-email>` and `<your-password>` with your autochecker credentials.
+   Replace `<your-email>` and `<github-username><telegram-alias>` with the credentials you entered in autochecker bot.
 
-   You should see a JSON array of lab and task objects:
+   You should see a JSON array of lab and task from this course:
 
    ```json
    [
@@ -95,7 +88,6 @@ The database starts empty. We can get anonymized data on task completions in Aut
    ```
 
 > [!NOTE]
-> Items with `"type": "lab"` are labs. Items with `"type": "task"` have a non-null `task` field and belong to the lab specified in the `lab` field.
 > If your terminal shows JSON in one long line, you can format the output using an [online JSON viewer](https://jsonformatter.org/).
 
 #### 1.2.2. Fetch check logs
@@ -106,7 +98,7 @@ The database starts empty. We can get anonymized data on task completions in Aut
 
    ```terminal
    curl \
-     -u <your-email>@innopolis.university:<your-password> \
+     -u <your-email>@innopolis.university:<github-username><telegram-alias> \
      "https://auche.namaz.live/api/logs?limit=5"
    ```
 
@@ -148,7 +140,7 @@ The database starts empty. We can get anonymized data on task completions in Aut
 
    ```terminal
    curl \
-     -u <your-email>@innopolis.university:<your-password> \
+     -u <your-email>@innopolis.university:<github-username><telegram-alias> \
      "https://auche.namaz.live/api/logs?since=2026-03-01T00:00:00Z&limit=5"
    ```
 
@@ -261,7 +253,7 @@ The code stubs in `backend/app/etl.py` contain detailed TODOs.
 
    <h4>401 Unauthorized from the autochecker API</h4>
 
-   Check that `AUTOCHECKER_EMAIL` and `AUTOCHECKER_PASSWORD` are set correctly in `.env.docker.secret`. The password is `<your-github-username><your-telegram-alias>` (no spaces, no `@`).
+   Check that `AUTOCHECKER_EMAIL` and `AUTOCHECKER_PASSWORD` are set correctly in `.env.docker.secret`. The password is `<github-username><telegram-alias>` (no spaces, no `@`).
 
    <h4>500 Internal Server Error</h4>
 
