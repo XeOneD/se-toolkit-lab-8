@@ -4,11 +4,20 @@ on:
   pull_request_target:
     types: [opened, synchronize]
   workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number to close
+        required: true
+        type: number
 
 
 jobs:
   close-fork-pr:
-    if: github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    if: ${{
+        github.event_name == 'workflow_dispatch' 
+        ||
+        github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+      }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -20,7 +29,9 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const prNumber = context.payload.pull_request.number;
+            const prNumber = context.eventName === 'workflow_dispatch'
+              ? Number(context.payload.inputs.pr_number)
+              : context.payload.pull_request.number;
 
             await github.rest.issues.createComment({
               owner,
