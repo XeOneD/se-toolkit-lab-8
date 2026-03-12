@@ -19,7 +19,7 @@
   - [Login without password](#login-without-password)
   - [Login with password](#login-with-password)
 - [`SSH` shell](#ssh-shell)
-- [Check whether you run an `SSH` shell](#check-whether-you-run-an-ssh-shell)
+  - [Check whether you run an `SSH` shell](#check-whether-you-run-an-ssh-shell)
 - [Common errors](#common-errors)
   - [`Permission denied (publickey)`](#permission-denied-publickey)
   - [`Bad owner or permissions`](#bad-owner-or-permissions)
@@ -263,7 +263,7 @@ An `SSH` shell is the interactive [shell](./shell.md#what-is-a-shell) session yo
 
 Commands you run in it execute on the remote machine, not on your local computer.
 
-## Check whether you run an `SSH` shell
+### Check whether you run an `SSH` shell
 
 1. To check whether you run an `SSH` shell,
 
