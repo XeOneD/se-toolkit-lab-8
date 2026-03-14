@@ -142,6 +142,10 @@ We refer to your fork as `fork` and to the original repo as `upstream`.
 > docker compose --env-file .env.docker.secret up --build -d
 > ```
 >
+> **Hangs at `=> [caddy builder 4/7] RUN npm install -g pnpm`**
+>
+> or
+>
 > **DNS resolution errors (`getaddrinfo EAI_AGAIN`).**
 >
 > If you see DNS errors like `getaddrinfo EAI_AGAIN registry.npmjs.org`, `Docker` can't resolve domain names. This is a university network DNS issue. Add Google DNS to `Docker`:
