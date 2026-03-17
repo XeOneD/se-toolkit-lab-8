@@ -42,16 +42,17 @@ Setting up VM access involves two stages: connecting to the VM as [the user `roo
 Complete these steps:
 
 <!-- no toc -->
-1. [Set up `SSH` (LOCAL)](#set-up-ssh-local)
-2. [Create a VM](./vm.md#create-a-vm)
-3. [Add the VM to the `SSH` config (LOCAL)](#add-the-vm-to-the-ssh-config-local)
-4. [Connect to the VM (LOCAL)](#connect-to-the-vm-local)
-5. [Create the non-root user `<user>` (REMOTE)](#create-the-non-root-user-user-remote)
-6. [Set up the `SSH` key authentication for the user `<user>` (REMOTE)](#set-up-the-ssh-key-authentication-for-the-user-user-remote)
-7. [Verify that you can connect to the VM by `SSH` as the user `<user>` (LOCAL)](#verify-that-you-can-connect-to-the-vm-by-ssh-as-the-user-user-local)
-8. [Harden the `SSH` config (REMOTE)](#harden-the-ssh-config-remote)
-9. [Update the `SSH` config (LOCAL)](#update-the-ssh-config-local)
-10. [Restart `sshd` (REMOTE)](#restart-sshd-remote)
+1. [Set up `SSH` (LOCAL)](#set-up-ssh-local).
+2. [Create a VM](./vm.md#create-a-vm).
+3. [Add the VM to the `SSH` config (LOCAL)](#add-the-vm-to-the-ssh-config-local).
+4. [Connect to the VM (LOCAL)](#connect-to-the-vm-local).
+5. [Create the non-root user `<user>` (REMOTE)](#create-the-non-root-user-user-remote).
+6. [Set up the `SSH` key authentication for the user `<user>` (REMOTE)](#set-up-the-ssh-key-authentication-for-the-user-user-remote).
+7. [Update the `SSH` config (LOCAL)](#update-the-ssh-config-local).
+8. [Connect to the VM as the user `<user>` (LOCAL)](#connect-to-the-vm-as-the-user-user-local).
+9. [Harden the `SSH` config (REMOTE)](#harden-the-ssh-config-remote).
+10. [Restart `sshd` (REMOTE)](#restart-sshd-remote).
+11. [Verify you can connect as the user `<user>` (LOCAL)](#verify-you-can-connect-as-the-user-user-local).
 
 ## Set up `SSH` (LOCAL)
 
@@ -61,12 +62,12 @@ Complete these steps:
 
 <!-- no toc -->
 1. [Check your current shell](./vs-code.md#check-the-current-shell-in-the-vs-code-terminal).
-2. [Create a new `SSH` key (LOCAL)](#create-a-new-ssh-key-local)
-3. [Find the `SSH` key files (LOCAL)](#find-the-ssh-key-files-local)
-4. [Get the `SSH` public key (LOCAL)](#get-the-ssh-public-key-local)
-5. [Start the `ssh-agent` (LOCAL)](#start-the-ssh-agent-local)
-6. [Add the `SSH` key to the `ssh-agent` (LOCAL)](#add-the-ssh-key-to-the-ssh-agent-local)
-7. [Verify the `SSH` setup (LOCAL)](#verify-the-ssh-setup-local)
+2. [Create a new `SSH` key (LOCAL)](#create-a-new-ssh-key-local).
+3. [Find the `SSH` key files (LOCAL)](#find-the-ssh-key-files-local).
+4. [Get the `SSH` public key (LOCAL)](#get-the-ssh-public-key-local).
+5. [Start the `ssh-agent` (LOCAL)](#start-the-ssh-agent-local).
+6. [Add the `SSH` key to the `ssh-agent` (LOCAL)](#add-the-ssh-key-to-the-ssh-agent-local).
+7. [Verify the `SSH` setup (LOCAL)](#verify-the-ssh-setup-local).
 
 ### Create a new `SSH` key (LOCAL)
 
