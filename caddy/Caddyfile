@@ -28,6 +28,11 @@
     handle /openapi.json {
         reverse_proxy http://backend:{$BACKEND_CONTAINER_PORT}
     }
+    handle_path /flutter* {
+        root * /srv/flutter
+        try_files {path} /index.html
+        file_server
+    }
     handle {
         root * /srv/react
         try_files {path} /index.html
