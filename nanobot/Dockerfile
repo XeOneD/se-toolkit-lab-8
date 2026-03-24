@@ -19,16 +19,16 @@ ENV UV_NO_DEV=1
 ENV UV_PYTHON_DOWNLOADS=0
 
 WORKDIR /app
-RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-install-workspace --package nanobot
-
-COPY nanobot /app/nanobot
-COPY pyproject.toml uv.lock /app/
+COPY --from=workspace pyproject.toml uv.lock /app/
+COPY pyproject.toml /app/nanobot/pyproject.toml
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --package nanobot
+    uv sync --frozen --no-install-workspace --package lms-nanobot
+
+COPY . /app/nanobot
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --package lms-nanobot
 
 # ---
 # Stage 2: use a final image without uv
