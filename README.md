@@ -4,7 +4,7 @@
 
 ## Product brief
 
-> Your team has been running the LMS backend for weeks. Everyone queries data through the React dashboard or Swagger UI. Your team lead wants a new kind of interface: an AI agent that anyone can talk to in natural language. Instead of clicking through dashboards, users just ask questions — "which lab has the lowest pass rate?", "any errors in the last hour?" — and the agent figures out which API calls to make.
+> Your team has been running the LMS backend for weeks. Everyone queries data through the React dashboard or Swagger UI. Your team lead wants a new kind of interface: an AI agent that anyone can talk to in natural language. Nanobot is a lighter version of OpenClaw, and this kind of agent is becoming the new intelligent AI user interface. Instead of clicking through dashboards, users just ask questions — "which lab has the lowest pass rate?", "any errors in the last hour?" — and the agent figures out which API calls to make.
 >
 > Set it up from scratch. Wire it into the system. Then extend it with observability tools so it can answer questions about system health too.
 
@@ -25,61 +25,36 @@ By the end of this lab, you should be able to say:
 
 ## Architecture
 
-You start with the base LMS system (left side). During the lab, you add the agent and chat client (right side).
+High level: by the end of the lab, the system looks like this.
+
+This is different from Lab 7. There, you built one client around your own LLM loop. Here, the agent becomes a shared system layer that multiple clients can talk to, and that layer can use reusable tools, memory, and scheduled actions.
 
 ```
-What you start with                    What you add
-====================                   =============
-
-┌──────────────┐                       ┌──────────────┐
-│ React        │                       │ Flutter      │
-│ Dashboard    │                       │ Chat UI      │
-│ /            │                       │ /flutter     │
-└──────┬───────┘                       └──────┬───────┘
-       │ HTTP                                 │ WebSocket
-       │                                      │
-       ▼                                      ▼
-┌──────────────────────────────────────────────────────┐
-│  Caddy (reverse proxy)                               │
-│  routes /items, /analytics, /ws/chat, /flutter, ...  │
-└──────┬────────────────────────────────┬──────────────┘
-       │                                │
-       │ /items, /analytics, ...        │ /ws/chat
-       ▼                                ▼
-┌──────────────┐                 ┌──────────────┐
-│ Backend      │                 │ Nanobot      │
-│ (FastAPI)    │◀────────────────│ (AI agent)   │
-│              │   MCP tools     │              │
-└──────┬───────┘                 └──────────────┘
-       │
-       ▼
-┌──────────────┐
-│ PostgreSQL   │
-└──────────────┘
+[Browser]            [Telegram, optional]
+    \                       /
+     \                     /
+      +---- [Nanobot Agent] ---- [LLM]
+                 |
+         +-------+-------+
+         |               |
+   [LMS Tools]   [Observability Tools]
+         |               |
+   [LMS Backend]    [Logs / Traces]
+         |
+    [Postgres]
 ```
 
 ### What you start with
 
-| Service | What it does |
-|---------|-------------|
-| **backend** | FastAPI REST API — labs, scores, learners, analytics, ETL pipeline. Already instrumented with OpenTelemetry. |
-| **postgres** | Database storing all LMS data |
-| **caddy** | Reverse proxy — routes traffic, serves the React dashboard and observability UIs |
-| **client-web-react** | React dashboard at `/` — charts and tables |
-| **qwen-code-api** | LLM proxy — gives you access to the Qwen language model |
-| **victorialogs** | Log database — stores structured logs, queryable via LogsQL. UI at `/utils/victorialogs` |
-| **victoriatraces** | Trace database — stores distributed traces. UI at `/utils/victoriatraces` |
-| **otel-collector** | OpenTelemetry Collector — routes logs and traces from services to VictoriaLogs/Traces |
-| **pgadmin** | Database admin UI at `/utils/pgadmin` |
+- **LMS app**: the React dashboard, FastAPI backend, and PostgreSQL database.
+- **Platform services**: Caddy routes requests, and `qwen-code-api` gives your agent access to the LLM.
+- **Observability stack**: OpenTelemetry, VictoriaLogs, and VictoriaTraces already collect system telemetry.
 
 ### What you add
 
-| Service | What it does | When |
-|---------|-------------|------|
-| **nanobot** | AI agent — receives chat via WebSocket, reasons with LLM, calls backend via MCP tools | Tasks 1-2 |
-| **client-web-flutter** | Chat UI at `/flutter` — talk to the agent in a browser, protected by a student-chosen access key | Task 2 |
-| Observability MCP tools | Agent can query logs and traces | Task 3 |
-| Cron health check | Agent reports system health on a schedule | Task 5 |
+- **Nanobot agent**: a new interface to the LMS that can reason, use tools, and answer in natural language.
+- **Web chat access**: a WebSocket channel plus Flutter web client at `/flutter`, protected by `NANOBOT_ACCESS_KEY`.
+- **New agent abilities**: LMS MCP tools first, then observability tools, then a scheduled health-check job.
 
 ## Tasks
 
