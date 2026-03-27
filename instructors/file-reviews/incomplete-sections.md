@@ -35,11 +35,11 @@
 
 ### `lab/tasks/required/task-1.md`
 
-- [lab/tasks/required/task-1.md:49](../../lab/tasks/required/task-1.md#deliverables) — ## Deliverables (empty)
+- [lab/tasks/required/task-1.md:49](../../lab/tasks/required/task-1.md) — stale note: `## Deliverables` section no longer exists
 
 ### `lab/tasks/required/task-4.md`
 
-- [lab/tasks/required/task-4.md:12](../../lab/tasks/required/task-4.md#deliverables) — ## Deliverables (empty)
+- [lab/tasks/required/task-4.md:12](../../lab/tasks/required/task-4.md) — stale note: `## Deliverables` section no longer exists
 
 ## Wiki
 

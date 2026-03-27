@@ -324,7 +324,7 @@ The Qwen Code API is included as a Docker Compose service in this lab. You just 
 > [!NOTE]
 > If you already have a Qwen Code API key from a previous lab, use the same one. Set it as `QWEN_CODE_API_KEY` in `.env.docker.secret` (step 1.2).
 
-If you need a new key, follow the [Qwen Code API setup guide](../../wiki/qwen-code-api.md#get-an-api-key).
+If you need a new key, follow the [Qwen Code API setup guide](../../wiki/qwen-code-api.md#qwen-code-api-key).
 
 Verify the API works:
 
