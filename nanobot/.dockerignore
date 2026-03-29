@@ -1,0 +1,5 @@
+# Allow parent directory access for workspace
+!../pyproject.toml
+!../uv.lock
+!../mcp/
+!../nanobot-websocket-channel/
